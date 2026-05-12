@@ -100,7 +100,7 @@ function Home() {
                         </div>
                         <div className="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
                             <div className="feature-box">
-                                <div className="icon-container"><i className="bi bi-handshake"></i></div>
+                                <div className="icon-container"><i className="bi bi-people"></i></div>
                                 <h4>Partnership</h4>
                                 <p>Working alongside our clients to develop enduring and long-standing business partnerships.</p>
                             </div>
