@@ -33,7 +33,7 @@ function Navbar() {
 
                 {/* Logo */}
                 <Link to="/" className="logo d-flex align-items-center me-auto">
-                    <h1 className="sitename" >Gryphus Solutions</h1>
+                    <h1 className="sitename" style={{fontFamily: 'Rajdhani, sans-serif', letterSpacing: '3px', fontWeight: '700'}}>GRYPHUS SOLUTIONS</h1>
                 </Link>
 
                 {/* Navigation */}
@@ -83,7 +83,7 @@ function Navbar() {
                                                 placeholder="Enter password"
                                             />
                                         </div>
-                                        <button type="submit" className="btn w-100" style={{ background: '#2d6a2d', color: 'white' }}>
+                                        <button type="submit" className="btn w-100" style={{ background: '#2979ff', color: 'white' }}>
                                             Login
                                         </button>
                                         <div className="mt-2 text-center">
