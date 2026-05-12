@@ -87,7 +87,15 @@ function Navbar() {
                                             Login
                                         </button>
                                         <div className="mt-2 text-center">
-                                            <small>No account? <Link to="/register" onClick={() => setLoginOpen(false)}>Register here</Link></small>
+                                            <small>
+                                                No account? <Link
+                                                to="/register"
+                                                onClick={() => setLoginOpen(false)}
+                                                style={{ color: '#2979ff', fontWeight: '500', textDecoration: 'underline' }}
+                                            >
+                                                Register here
+                                            </Link>
+                                            </small>
                                         </div>
                                     </form>
                                 </div>

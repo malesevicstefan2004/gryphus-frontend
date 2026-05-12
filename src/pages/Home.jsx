@@ -244,11 +244,6 @@ function Home() {
                                                         <div className="service-info">
                                                             <h3>{service.name}</h3>
                                                             <p>{service.description}</p>
-                                                            <div className="service-action">
-                                                                <Link to="/services" className="read-more-btn">
-                                                                    Details <i className="bi bi-arrow-right"></i>
-                                                                </Link>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
