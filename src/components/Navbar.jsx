@@ -1,10 +1,22 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 function Navbar() {
     const [loginOpen, setLoginOpen] = useState(false)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const dropdownRef = useRef(null)
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setLoginOpen(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -39,14 +51,14 @@ function Navbar() {
                 {/* Navigation */}
                 <nav id="navmenu" className="navmenu">
                     <ul>
-                        <li><Link to="/" style={{textDecoration: 'none'}}>Home</Link></li>
-                        <li><a href="#about" style={{textDecoration: 'none'}}>About</a></li>
-                        <li><Link to="/services" style={{textDecoration: 'none'}}>Services</Link></li>
-                        <li><a href="#reviews" style={{textDecoration: 'none'}}>Reviews</a></li>
-                        <li><a href="#news" style={{textDecoration: 'none'}}>News</a></li>
+                        <li><a href="/" style={{textDecoration: 'none'}}>Home</a></li>
+                        <li><a href="/#about" style={{textDecoration: 'none'}}>About</a></li>
+                        <li><a href="/#services" style={{textDecoration: 'none'}}>Services</a></li>
+                        <li><a href="/#reviews" style={{textDecoration: 'none'}}>Reviews</a></li>
+                        <li><a href="/#news" style={{textDecoration: 'none'}}>News</a></li>
 
                         {/* Login Dropdown */}
-                        <li className="dropdown">
+                        <li className="dropdown" ref={dropdownRef}>
                             <a href="#" onClick={(e) => { e.preventDefault(); setLoginOpen(!loginOpen) }}>
                                 <span>Login</span>
                                 <i className="bi bi-chevron-down toggle-dropdown"></i>
@@ -106,7 +118,7 @@ function Navbar() {
                 </nav>
 
                 {/* Contact button */}
-                <a className="btn-getstarted" href="#contact">Contact Us</a>
+                <a className="btn-getstarted" href="/#contact">Contact Us</a>
 
             </div>
         </header>
