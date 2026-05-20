@@ -6,6 +6,9 @@ import Register from './pages/Register'
 import Reviews from './pages/Reviews'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import ReviewDetail from './pages/ReviewDetail'
+
+
 
 
 function App() {
@@ -17,6 +20,7 @@ function App() {
                 <Route path="/services" element={<Services />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/reviews" element={<Reviews />} />
+                <Route path="/reviews/:id" element={<ReviewDetail />} />
             </Routes>
             <Footer />
         </BrowserRouter>

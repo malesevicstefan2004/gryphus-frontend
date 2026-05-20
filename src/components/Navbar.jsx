@@ -6,6 +6,13 @@ function Navbar() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const dropdownRef = useRef(null)
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'))
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        setIsLoggedIn(false)
+        setLoginOpen(false)
+    }
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -29,6 +36,8 @@ function Navbar() {
             const data = await response.json()
             if (data.token) {
                 localStorage.setItem('token', data.token)
+                localStorage.setItem('token', data.token)
+                setIsLoggedIn(true)
                 setLoginOpen(false)
                 alert('Login successful!')
             } else {
@@ -58,61 +67,71 @@ function Navbar() {
                         <li><a href="/#news" style={{textDecoration: 'none'}}>News</a></li>
 
                         {/* Login Dropdown */}
-                        <li className="dropdown" ref={dropdownRef}>
-                            <a href="#" onClick={(e) => { e.preventDefault(); setLoginOpen(!loginOpen) }}>
-                                <span>Login</span>
-                                <i className="bi bi-chevron-down toggle-dropdown"></i>
-                            </a>
-                            {loginOpen && (
-                                <div style={{
-                                    position: 'absolute',
-                                    background: 'white',
-                                    padding: '20px',
-                                    borderRadius: '8px',
-                                    boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                                    width: '280px',
-                                    right: 0,
-                                    zIndex: 9999
-                                }}>
-                                    <form onSubmit={handleLogin}>
-                                        <div className="mb-3">
-                                            <label className="form-label">Username</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={username}
-                                                onChange={(e) => setUsername(e.target.value)}
-                                                placeholder="Enter username"
-                                            />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label className="form-label">Password</label>
-                                            <input
-                                                type="password"
-                                                className="form-control"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                placeholder="Enter password"
-                                            />
-                                        </div>
-                                        <button type="submit" className="btn w-100" style={{ background: '#2979ff', color: 'white' }}>
-                                            Login
-                                        </button>
-                                        <div className="mt-2 text-center">
-                                            <small>
-                                                No account? <Link
-                                                to="/register"
-                                                onClick={() => setLoginOpen(false)}
-                                                style={{ color: '#2979ff', fontWeight: '500', textDecoration: 'underline' }}
-                                            >
-                                                Register here
-                                            </Link>
-                                            </small>
-                                        </div>
-                                    </form>
-                                </div>
-                            )}
-                        </li>
+                        {isLoggedIn ? (
+                            <li>
+                                <a href="#" onClick={(e) => { e.preventDefault(); handleLogout() }}
+                                   style={{textDecoration: 'none', color: '#2979ff'}}>
+                                    <i className="bi bi-person-check me-1"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        ) : (
+                            <li className="dropdown" ref={dropdownRef}>
+                                <a href="#" onClick={(e) => { e.preventDefault(); setLoginOpen(!loginOpen) }}>
+                                    <span>Login</span>
+                                    <i className="bi bi-chevron-down toggle-dropdown"></i>
+                                </a>
+                                {loginOpen && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        background: 'white',
+                                        padding: '20px',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                                        width: '280px',
+                                        right: 0,
+                                        zIndex: 9999
+                                    }}>
+                                        <form onSubmit={handleLogin}>
+                                            <div className="mb-3">
+                                                <label className="form-label">Username</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    value={username}
+                                                    onChange={(e) => setUsername(e.target.value)}
+                                                    placeholder="Enter username"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Password</label>
+                                                <input
+                                                    type="password"
+                                                    className="form-control"
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    placeholder="Enter password"
+                                                />
+                                            </div>
+                                            <button type="submit" className="btn w-100" style={{ background: '#2979ff', color: 'white' }}>
+                                                Login
+                                            </button>
+                                            <div className="mt-2 text-center">
+                                                <small>
+                                                    No account? <Link
+                                                    to="/register"
+                                                    onClick={() => setLoginOpen(false)}
+                                                    style={{ color: '#2979ff', fontWeight: '500', textDecoration: 'underline' }}
+                                                >
+                                                    Register here
+                                                </Link>
+                                                </small>
+                                            </div>
+                                        </form>
+                                    </div>
+                                )}
+                            </li>
+                        )}
                     </ul>
                     <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
@@ -124,5 +143,6 @@ function Navbar() {
         </header>
     )
 }
+
 
 export default Navbar

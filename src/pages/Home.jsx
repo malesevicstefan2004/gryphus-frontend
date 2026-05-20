@@ -285,13 +285,18 @@ function Home() {
                                                 <span>{review.serviceName || 'Gryphus Client'}</span>
                                             </div>
                                         </div>
-                                        <div className="quote-icon">
-                                            <i className="bi bi-quote"></i>
-                                        </div>
+                                        <Link to={`/reviews/${review.id}`} style={{ color: '#1a3a6b', fontSize: '13px' }}>
+                                            View Details →
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
                         ))}
+                    </div>
+
+                    {/* Add Review Button */}
+                    <div className="text-center mt-5">
+                        <a href="#add-review" className="btn btn-primary">Leave a Review</a>
                     </div>
 
                     {/* Add Review Form */}
