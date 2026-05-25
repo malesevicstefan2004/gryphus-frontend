@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import API_URL from '../api'
 
 function Register() {
     const [username, setUsername] = useState('')
@@ -17,7 +18,7 @@ function Register() {
             return
         }
         try {
-            await axios.post('http://localhost:8080/api/auth/register', { username, password })
+            await axios.post(`${API_URL}/api/auth/register`, { username, password })
             setSuccess(true)
             setMessage('Account created successfully! Redirecting to home...')
             setTimeout(() => navigate('/'), 2000)

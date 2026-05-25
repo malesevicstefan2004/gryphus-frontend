@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
+import API_URL from '../api'
 
 function Navbar() {
     const [loginOpen, setLoginOpen] = useState(false)
@@ -28,7 +29,7 @@ function Navbar() {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch('http://localhost:8080/api/auth/login', {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })

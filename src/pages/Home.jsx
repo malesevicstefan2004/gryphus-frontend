@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import API_URL from '../api'
 
 function Home() {
     const [reviews, setReviews] = useState([])
@@ -8,9 +9,9 @@ function Home() {
     const [news, setNews] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/reviews').then(res => setReviews(res.data))
-        axios.get('http://localhost:8080/api/services').then(res => setServices(res.data))
-        axios.get('http://localhost:8080/api/news').then(res => setNews(res.data))
+        axios.get(`${API_URL}/api/reviews`).then(res => setReviews(res.data))
+        axios.get(`${API_URL}/api/services`).then(res => setServices(res.data))
+        axios.get(`${API_URL}/api/news`).then(res => setNews(res.data))
     }, [])
 
     return (
@@ -305,7 +306,7 @@ function Home() {
                             <h2>Submit a Review</h2>
                             <p>Share your experience with Gryphus Solutions</p>
                         </div>
-                        <AddReviewForm onReviewAdded={() => axios.get('http://localhost:8080/api/reviews').then(res => setReviews(res.data))} />
+                        <AddReviewForm onReviewAdded={() => axios.get(`${API_URL}/api/reviews`).then(res => setReviews(res.data))} />
                     </div>
                 </div>
             </section>
@@ -431,7 +432,7 @@ function AddReviewForm({ onReviewAdded }) {
             return
         }
         try {
-            await axios.post('http://localhost:8080/api/reviews',
+            await axios.post(`${API_URL}/api/reviews`,
                 { comment, rating },
                 { headers: { Authorization: `Bearer ${token}` } }
             )

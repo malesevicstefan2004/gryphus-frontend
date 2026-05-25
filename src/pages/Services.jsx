@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import API_URL from '../api'
 
 function Services() {
     const [services, setServices] = useState([])
@@ -7,7 +8,7 @@ function Services() {
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/services')
+        axios.get(`${API_URL}/api/services`)
             .then(res => setServices(res.data))
             .catch(() => setError('Failed to load services. Please try again later.'))
             .finally(() => setLoading(false))

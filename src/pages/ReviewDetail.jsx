@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
+import API_URL from '../api'
 
 function ReviewDetail() {
     const { id } = useParams()
@@ -9,7 +10,7 @@ function ReviewDetail() {
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/reviews/${id}`)
+        axios.get(`${API_URL}/api/reviews/${id}`)
             .then(res => setReview(res.data))
             .catch(() => setError('Review not found or server error.'))
             .finally(() => setLoading(false))

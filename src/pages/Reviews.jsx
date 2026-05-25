@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import API_URL from '../api'
 
 function AddReviewForm({ onReviewAdded }) {
     const [comment, setComment] = useState('')
@@ -10,7 +11,7 @@ function AddReviewForm({ onReviewAdded }) {
     const [securityServiceId, setSecurityServiceId] = useState('')
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/services')
+        axios.get(`${API_URL}/api/services`)
             .then(res => setServices(res.data))
             .catch(() => {})
     }, [])
@@ -26,7 +27,7 @@ function AddReviewForm({ onReviewAdded }) {
         if (securityServiceId) body.securityServiceId = Number(securityServiceId)
 
         try {
-            await axios.post('http://localhost:8080/api/reviews', body, {
+            await axios.post(`${API_URL}/api/reviews`, body, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setMessage('Review submitted successfully!')
@@ -126,7 +127,7 @@ function Reviews() {
 
     const fetchReviews = () => {
         setLoading(true)
-        axios.get('http://localhost:8080/api/reviews')
+        axios.get(`${API_URL}/api/reviews`)
             .then(res => setReviews(res.data))
             .catch(() => setError('Failed to load reviews. Please try again later.'))
             .finally(() => setLoading(false))
