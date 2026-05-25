@@ -5,14 +5,32 @@ import axios from 'axios'
 function ReviewDetail() {
     const { id } = useParams()
     const [review, setReview] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/reviews/${id}`)
             .then(res => setReview(res.data))
-            .catch(err => console.error(err))
+            .catch(() => setError('Review not found or server error.'))
+            .finally(() => setLoading(false))
     }, [id])
 
-    if (!review) return <div className="container mt-5">Loading...</div>
+    if (loading) return (
+        <div className="container mt-5 text-center">
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    )
+
+    if (error) return (
+        <section className="section" style={{ minHeight: '100vh' }}>
+            <div className="container text-center mt-5">
+                <div className="alert alert-danger">{error}</div>
+                <Link to="/reviews" style={{ color: '#1a3a6b', fontWeight: '600' }}>← Back to Reviews</Link>
+            </div>
+        </section>
+    )
 
     return (
         <section className="section" style={{ minHeight: '100vh' }}>
@@ -53,7 +71,7 @@ function ReviewDetail() {
                                 <strong style={{ color: '#1a3a6b' }}>Date:</strong>
                                 <p>{review.date}</p>
                             </div>
-                            <Link to="/#reviews" style={{
+                            <Link to="/reviews" style={{
                                 background: '#1a3a6b',
                                 color: 'white',
                                 padding: '10px 24px',

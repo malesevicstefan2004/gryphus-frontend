@@ -36,7 +36,6 @@ function Navbar() {
             const data = await response.json()
             if (data.token) {
                 localStorage.setItem('token', data.token)
-                localStorage.setItem('token', data.token)
                 setIsLoggedIn(true)
                 setLoginOpen(false)
                 alert('Login successful!')
@@ -60,10 +59,10 @@ function Navbar() {
                 {/* Navigation */}
                 <nav id="navmenu" className="navmenu">
                     <ul>
-                        <li><a href="/" style={{textDecoration: 'none'}}>Home</a></li>
+                        <li><Link to="/" style={{textDecoration: 'none'}}>Home</Link></li>
                         <li><a href="/#about" style={{textDecoration: 'none'}}>About</a></li>
-                        <li><a href="/#services" style={{textDecoration: 'none'}}>Services</a></li>
-                        <li><a href="/#reviews" style={{textDecoration: 'none'}}>Reviews</a></li>
+                        <li><Link to="/services" style={{textDecoration: 'none'}}>Services</Link></li>
+                        <li><Link to="/reviews" style={{textDecoration: 'none'}}>Reviews</Link></li>
                         <li><a href="/#news" style={{textDecoration: 'none'}}>News</a></li>
 
                         {/* Login Dropdown */}
