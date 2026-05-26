@@ -49,9 +49,10 @@ src/
   App.jsx             Router setup and layout
   main.jsx            Entry point, Bootstrap import
   components/
-    Navbar.jsx        Navigation with login modal
-    Footer.jsx        Site footer
-    ScrollToTop.jsx   Scroll restoration on route change
+    Navbar.jsx          Navigation with login modal
+    Footer.jsx          Site footer
+    ScrollToTop.jsx     Scroll restoration on route change
+    AddReviewForm.jsx   Reusable review form with rating and service selection
   pages/
     Home.jsx          Main landing page with all sections
     Reviews.jsx       Reviews list
