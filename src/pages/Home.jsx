@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import API_URL from '../api'
+import AddReviewForm from '../components/AddReviewForm'
 
 function Home() {
     const [reviews, setReviews] = useState([])
@@ -9,9 +10,9 @@ function Home() {
     const [news, setNews] = useState([])
 
     useEffect(() => {
-        axios.get(`${API_URL}/api/reviews`).then(res => setReviews(res.data))
-        axios.get(`${API_URL}/api/services`).then(res => setServices(res.data))
-        axios.get(`${API_URL}/api/news`).then(res => setNews(res.data))
+        axios.get(`${API_URL}/api/reviews`).then(res => setReviews(res.data)).catch(() => {})
+        axios.get(`${API_URL}/api/services`).then(res => setServices(res.data)).catch(() => {})
+        axios.get(`${API_URL}/api/news`).then(res => setNews(res.data)).catch(() => {})
     }, [])
 
     return (
@@ -417,123 +418,6 @@ function Home() {
                 </div>
             </section>
         </>
-    )
-}
-function AddReviewForm({ onReviewAdded }) {
-    const [comment, setComment] = useState('')
-    const [rating, setRating] = useState(5)
-    const [message, setMessage] = useState('')
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const token = localStorage.getItem('token')
-        if (!token) {
-            setMessage('Please login first to leave a review.')
-            return
-        }
-        try {
-            await axios.post(`${API_URL}/api/reviews`,
-                { comment, rating },
-                { headers: { Authorization: `Bearer ${token}` } }
-            )
-            setMessage('Review submitted successfully!')
-            setComment('')
-            setRating(5)
-            onReviewAdded()
-        } catch (error) {
-            setMessage('Error submitting review. Please try again.')
-        }
-    }
-
-    return (
-        <div className="row justify-content-center mt-2">
-            <div className="col-lg-8">
-                <div style={{
-                    background: '#f8f9fa',
-                    borderRadius: '12px',
-                    padding: '40px',
-                    borderTop: '3px solid #1a3a6b'
-                }}>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                            <label style={{ color: '#2979ff', fontWeight: '500', marginBottom: '8px', display: 'block' }}>
-                                Rating
-                            </label>
-                            <div style={{ display: 'flex', gap: '8px' }}>
-                                {[1,2,3,4,5].map(num => (
-                                    <button
-                                        key={num}
-                                        type="button"
-                                        onClick={() => setRating(num)}
-                                        style={{
-                                            width: '42px',
-                                            height: '42px',
-                                            borderRadius: '4px',
-                                            border: `2px solid ${rating >= num ? '#2979ff' : '#dee2e6'}`,
-                                            background: rating >= num ? '#2979ff' : 'white',
-                                            color: rating >= num ? 'white' : '#2979ff',
-                                            fontWeight: '600',
-                                            cursor: 'pointer',
-                                            transition: 'all 0.2s'
-                                        }}
-                                    >
-                                        {num}
-                                    </button>
-                                ))}
-                                <span style={{ color: '#6c757d', alignSelf: 'center', marginLeft: '8px', fontSize: '14px' }}>
-                  {rating === 5 ? 'Excellent' : rating === 4 ? 'Very Good' : rating === 3 ? 'Good' : rating === 2 ? 'Fair' : 'Poor'}
-                </span>
-                            </div>
-                        </div>
-
-                        <div className="mb-4">
-                            <label style={{ color: '#2979ff', fontWeight: '500', marginBottom: '8px', display: 'block' }}>
-                                Your Review
-                            </label>
-                            <textarea
-                                className="form-control"
-                                rows="4"
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                placeholder="Share your experience with Gryphus Solutions..."
-                                required
-                                style={{ borderColor: '#dee2e6', resize: 'none' }}
-                            ></textarea>
-                        </div>
-
-                        {message && (
-                            <div style={{
-                                padding: '12px',
-                                borderRadius: '6px',
-                                marginBottom: '16px',
-                                background: message.includes('success') ? '#e8f5e9' : '#ffebee',
-                                color: message.includes('success') ? '#2e7d32' : '#c62828',
-                                fontSize: '14px'
-                            }}>
-                                {message}
-                            </div>
-                        )}
-
-                        <button
-                            type="submit"
-                            style={{
-                                background: '#2979ff',
-                                color: 'white',
-                                border: 'none',
-                                padding: '12px 32px',
-                                borderRadius: '6px',
-                                fontWeight: '600',
-                                letterSpacing: '1px',
-                                cursor: 'pointer',
-                                width: '100%'
-                            }}
-                        >
-                            SUBMIT REVIEW
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
     )
 }
 export default Home
